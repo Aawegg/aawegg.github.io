@@ -1,0 +1,472 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Aaweg Bhaladhare - GenAI Engineer</title>
+<meta name="description" content="Hi, I'm Aaweg. I build AI systems you can actually trust: multimodal RAG, agents, and the evaluation that keeps them honest." />
+<meta property="og:title" content="Aaweg Bhaladhare - GenAI Engineer" />
+<meta property="og:description" content="I build AI you can actually trust." />
+<meta property="og:type" content="website" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='24' fill='%23FF5A47'/%3E%3Ctext x='50' y='73' font-family='monospace' font-size='62' font-weight='700' fill='%23211e1a' text-anchor='middle'%3Ea%3C/text%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    /* warm playful palette - curated + locked */
+    --paper:   #FBEFDD;
+    --paper-2: #FFF7EC;
+    --ink:     #211e1a;
+    --ink-soft:#5b554c;
+    --coral:   #FF5A47;
+    --gold:    #FFB22C;
+    --green:   #2FAE66;
+    --blue:    #3B6FF5;
+    --purple:  #8B5CF6;
+
+    --shadow:    5px 5px 0 var(--ink);
+    --shadow-sm: 3px 3px 0 var(--ink);
+    --shadow-lg: 8px 8px 0 var(--ink);
+    --bd: 2.5px solid var(--ink);
+    --r-card: 20px;
+    --r-btn:  14px;
+    --r-pill: 999px;
+    --ease: cubic-bezier(.34,1.56,.64,1); /* springy */
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+  body {
+    font-family: "Plus Jakarta Sans", -apple-system, "Segoe UI", sans-serif;
+    background: var(--paper); color: var(--ink); line-height: 1.6;
+    -webkit-font-smoothing: antialiased; overflow-x: hidden;
+  }
+  a { color: inherit; text-decoration: none; }
+  .display { font-family: "Bricolage Grotesque", sans-serif; }
+  .mono { font-family: "Space Mono", monospace; }
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+  /* floating background blobs */
+  .blobs { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+  .blob { position: absolute; border-radius: 50%; filter: blur(50px); opacity: .35; }
+  .blob.b1 { width: 460px; height: 460px; background: var(--coral); top: -120px; right: -80px; animation: drift 18s ease-in-out infinite; }
+  .blob.b2 { width: 400px; height: 400px; background: var(--blue); bottom: -100px; left: -100px; animation: drift 22s ease-in-out infinite reverse; }
+  .blob.b3 { width: 320px; height: 320px; background: var(--gold); top: 45%; left: 55%; animation: drift 26s ease-in-out infinite; }
+  @keyframes drift { 0%,100%{transform:translate(0,0) scale(1)} 33%{transform:translate(40px,-30px) scale(1.08)} 66%{transform:translate(-30px,20px) scale(.95)} }
+
+  .content { position: relative; z-index: 1; }
+
+  /* squiggle underline */
+  .squig { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='12'%3E%3Cpath d='M0 7 q 11 -8 22 0 t 22 0' stroke='%23FF5A47' fill='none' stroke-width='3.5' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: repeat-x; background-position: 0 100%; background-size: auto 9px; padding-bottom: 8px; }
+  .squig.g { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='12'%3E%3Cpath d='M0 7 q 11 -8 22 0 t 22 0' stroke='%232FAE66' fill='none' stroke-width='3.5' stroke-linecap='round'/%3E%3C/svg%3E"); }
+  .hl-coral { color: var(--coral); } .hl-blue { color: var(--blue); } .hl-green { color: var(--green); } .hl-gold { color: var(--gold); }
+
+  /* ---------- nav ---------- */
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 50; transition: background .3s, box-shadow .3s; }
+  nav.scrolled { background: var(--paper); box-shadow: 0 3px 0 var(--ink); }
+  .nav-inner { max-width: 1100px; margin: 0 auto; padding: 16px 24px; display: flex; align-items: center; justify-content: space-between; }
+  .logo { font-family: "Bricolage Grotesque"; font-weight: 800; font-size: 21px; display: flex; align-items: center; gap: 7px; }
+  .logo .star { color: var(--coral); display: inline-block; animation: spin 6s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .nav-links { display: flex; align-items: center; gap: 8px; }
+  .nav-links a { font-weight: 600; font-size: 14.5px; padding: 7px 14px; border-radius: var(--r-pill); transition: background .2s, color .2s; }
+  .nav-links a:hover { background: var(--ink); color: var(--paper); }
+  .nav-links a.sayhi { background: var(--coral); border: var(--bd); box-shadow: var(--shadow-sm); }
+  .nav-links a.sayhi:hover { background: var(--coral); color: var(--ink); transform: translate(-1px,-1px); box-shadow: 4px 4px 0 var(--ink); }
+  .nav-toggle { display: none; background: var(--gold); border: var(--bd); border-radius: 10px; padding: 4px 10px; font-size: 20px; cursor: pointer; }
+
+  /* ---------- hero ---------- */
+  header.hero { min-height: 100dvh; display: flex; align-items: center; padding: 120px 0 70px; }
+  .hero-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 50px; align-items: center; }
+  .sticker { display: inline-block; font-family: "Space Mono"; font-weight: 700; font-size: 12.5px; letter-spacing: .06em; text-transform: uppercase; background: var(--gold); border: var(--bd); border-radius: var(--r-pill); padding: 7px 15px; box-shadow: var(--shadow-sm); transform: rotate(-3deg); margin-bottom: 24px; }
+  h1.display { font-size: clamp(40px, 6.4vw, 76px); font-weight: 800; line-height: 1.0; letter-spacing: -1.5px; margin-bottom: 22px; }
+  h1 .wave { display: inline-block; transform-origin: 70% 70%; animation: wave 2.4s ease-in-out infinite; }
+  @keyframes wave { 0%,60%,100%{transform:rotate(0)} 10%{transform:rotate(18deg)} 20%{transform:rotate(-10deg)} 30%{transform:rotate(16deg)} 40%{transform:rotate(-6deg)} 50%{transform:rotate(12deg)} }
+  .hero p.lead { font-size: clamp(16px, 2vw, 19px); color: var(--ink-soft); max-width: 52ch; margin-bottom: 16px; }
+  .now { font-family: "Space Mono"; font-size: 13px; color: var(--ink-soft); margin-bottom: 30px; display: flex; align-items: center; gap: 8px; }
+  .now .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--green); box-shadow: 0 0 0 0 rgba(47,174,102,.6); animation: ping 2s infinite; }
+  @keyframes ping { 0%{box-shadow:0 0 0 0 rgba(47,174,102,.6)} 70%{box-shadow:0 0 0 9px rgba(47,174,102,0)} 100%{box-shadow:0 0 0 0 rgba(47,174,102,0)} }
+  .cta-row { display: flex; flex-wrap: wrap; gap: 14px; }
+  .btn { font-family: "Plus Jakarta Sans"; display: inline-flex; align-items: center; gap: 8px; padding: 14px 24px; border-radius: var(--r-btn); font-weight: 700; font-size: 15px; border: var(--bd); box-shadow: var(--shadow); cursor: pointer; transition: transform .12s var(--ease), box-shadow .12s; }
+  .btn:hover { transform: translate(-2px,-2px); box-shadow: var(--shadow-lg); }
+  .btn:active { transform: translate(2px,2px); box-shadow: var(--shadow-sm); }
+  .btn-coral { background: var(--coral); }
+  .btn-paper { background: var(--paper-2); }
+
+  /* hero visual: avatar blob + floating sticker chips */
+  .hero-art { position: relative; display: flex; align-items: center; justify-content: center; min-height: 360px; }
+  .avatar { width: 230px; height: 230px; border-radius: 48% 52% 56% 44% / 52% 46% 54% 48%; background: var(--blue); border: var(--bd); box-shadow: var(--shadow-lg); display: flex; align-items: center; justify-content: center; font-family: "Bricolage Grotesque"; font-weight: 800; font-size: 84px; color: var(--paper-2); animation: morph 12s ease-in-out infinite; }
+  @keyframes morph { 0%,100%{border-radius:48% 52% 56% 44% / 52% 46% 54% 48%} 50%{border-radius:56% 44% 47% 53% / 44% 56% 44% 56%} }
+  .chip-float { position: absolute; font-family: "Space Mono"; font-weight: 700; font-size: 13px; background: var(--paper-2); border: var(--bd); border-radius: var(--r-pill); padding: 7px 13px; box-shadow: var(--shadow-sm); }
+  .chip-float.c1 { top: 6%; left: 2%; background: var(--coral); transform: rotate(-8deg); animation: bob 4s ease-in-out infinite; }
+  .chip-float.c2 { top: 14%; right: 0%; background: var(--gold); transform: rotate(7deg); animation: bob 5s ease-in-out infinite .3s; }
+  .chip-float.c3 { bottom: 14%; left: -2%; background: var(--green); transform: rotate(6deg); animation: bob 4.6s ease-in-out infinite .6s; }
+  .chip-float.c4 { bottom: 6%; right: 4%; background: var(--purple); color: var(--paper-2); transform: rotate(-6deg); animation: bob 5.4s ease-in-out infinite .2s; }
+  @keyframes bob { 0%,100%{translate:0 0} 50%{translate:0 -12px} }
+
+  /* ---------- section shell ---------- */
+  section { padding: 84px 0; }
+  .kicker { display: inline-block; font-family: "Space Mono"; font-weight: 700; font-size: 12.5px; letter-spacing: .07em; text-transform: uppercase; background: var(--ink); color: var(--paper); padding: 5px 12px; border-radius: var(--r-pill); margin-bottom: 16px; transform: rotate(-1.5deg); }
+  .sec-h { font-family: "Bricolage Grotesque"; font-size: clamp(30px, 5vw, 52px); font-weight: 800; letter-spacing: -1px; line-height: 1.04; }
+
+  /* ---------- about ---------- */
+  .about-card { background: var(--paper-2); border: var(--bd); border-radius: var(--r-card); box-shadow: var(--shadow-lg); padding: clamp(26px,4vw,46px); }
+  .about-card p { font-size: clamp(17px,2.3vw,21px); margin-bottom: 18px; max-width: 60ch; }
+  .about-card p:last-child { margin-bottom: 0; }
+  .about-stats { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 26px; }
+  .stat-stick { font-family: "Space Mono"; font-weight: 700; font-size: 13.5px; border: var(--bd); border-radius: var(--r-pill); padding: 8px 16px; box-shadow: var(--shadow-sm); }
+  .stat-stick:nth-child(1){ background: var(--coral); transform: rotate(-2deg); }
+  .stat-stick:nth-child(2){ background: var(--gold); transform: rotate(1.5deg); }
+  .stat-stick:nth-child(3){ background: var(--green); transform: rotate(-1deg); }
+  .stat-stick:nth-child(4){ background: var(--blue); color: var(--paper-2); transform: rotate(2deg); }
+
+  /* ---------- projects ---------- */
+  .proj-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 26px; }
+  .pcard { background: var(--paper-2); border: var(--bd); border-radius: var(--r-card); box-shadow: var(--shadow); padding: 26px; display: flex; flex-direction: column; transition: transform .18s var(--ease), box-shadow .18s; }
+  .pcard:nth-child(4n+1){ transform: rotate(-1.4deg); } .pcard:nth-child(4n+2){ transform: rotate(1.2deg); }
+  .pcard:nth-child(4n+3){ transform: rotate(1deg); } .pcard:nth-child(4n+4){ transform: rotate(-1.2deg); }
+  .pcard:hover { transform: rotate(0) translateY(-6px); box-shadow: var(--shadow-lg); }
+  .pcard .ptop { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+  .pcard .pno { font-family: "Space Mono"; font-weight: 700; font-size: 13px; color: var(--paper-2); background: var(--ink); width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+  .pcard.k-coral .pno { background: var(--coral); color: var(--ink); }
+  .pcard.k-blue .pno { background: var(--blue); }
+  .pcard.k-green .pno { background: var(--green); }
+  .pcard.k-gold .pno { background: var(--gold); color: var(--ink); }
+  .pcard h3 { font-family: "Bricolage Grotesque"; font-size: 25px; font-weight: 800; letter-spacing: -.5px; margin-bottom: 10px; }
+  .pcard p { color: var(--ink-soft); font-size: 14.5px; margin-bottom: 16px; flex: 1; }
+  .tags { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 16px; }
+  .tag { font-family: "Space Mono"; font-size: 11.5px; font-weight: 700; border: 2px solid var(--ink); border-radius: var(--r-pill); padding: 3px 10px; background: var(--paper); }
+  .plinks { display: flex; gap: 16px; }
+  .plinks a { font-weight: 700; font-size: 14px; border-bottom: 3px solid var(--coral); }
+  .plinks a:hover { color: var(--coral); }
+
+  /* oss */
+  .oss { margin-top: 26px; background: var(--ink); color: var(--paper); border: var(--bd); border-radius: var(--r-card); box-shadow: var(--shadow-lg); padding: 28px 30px; }
+  .oss h3 { font-family: "Bricolage Grotesque"; font-size: 20px; margin-bottom: 8px; }
+  .oss h3 .src { color: var(--gold); }
+  .oss p { color: #d9d2c6; font-size: 14.5px; }
+  .oss a.link { color: var(--gold); font-weight: 700; border-bottom: 2px solid var(--gold); }
+
+  /* ---------- experience ---------- */
+  .exp { position: relative; padding-left: 30px; max-width: 780px; border-left: 3px dashed var(--ink); }
+  .exp-item { padding-bottom: 40px; position: relative; }
+  .exp-item:last-child { padding-bottom: 0; }
+  .exp-item::before { content: ""; position: absolute; left: -40px; top: 4px; width: 16px; height: 16px; border-radius: 50%; border: var(--bd); background: var(--coral); }
+  .exp-item:nth-child(2)::before { background: var(--blue); }
+  .exp-top { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 6px; align-items: baseline; }
+  .exp-role { font-family: "Bricolage Grotesque"; font-size: 21px; font-weight: 800; }
+  .exp-date { font-family: "Space Mono"; color: var(--ink-soft); font-size: 13px; }
+  .exp-meta { color: var(--ink-soft); font-size: 14px; margin: 4px 0 12px; font-weight: 600; }
+  .exp ul { list-style: none; }
+  .exp li { font-size: 15px; margin-bottom: 9px; padding-left: 26px; position: relative; color: var(--ink-soft); }
+  .exp li::before { content: "➜"; position: absolute; left: 0; color: var(--coral); font-weight: 700; }
+
+  /* ---------- personality ---------- */
+  .fun-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
+  .fun { background: var(--paper-2); border: var(--bd); border-radius: var(--r-card); box-shadow: var(--shadow); padding: 24px; }
+  .fun:nth-child(1){ transform: rotate(-1.5deg); } .fun:nth-child(2){ transform: rotate(1deg); }
+  .fun:nth-child(3){ transform: rotate(-1deg); } .fun:nth-child(4){ transform: rotate(1.4deg); }
+  .fun:nth-child(5){ transform: rotate(-1.2deg); } .fun:nth-child(6){ transform: rotate(1deg); }
+  .fun .emo { font-size: 30px; display: block; margin-bottom: 10px; }
+  .fun h4 { font-family: "Bricolage Grotesque"; font-size: 17px; margin-bottom: 5px; }
+  .fun p { color: var(--ink-soft); font-size: 14px; }
+
+  /* ---------- skills marquee ---------- */
+  .marquee { overflow: hidden; border-top: var(--bd); border-bottom: var(--bd); padding: 18px 0; background: var(--coral); transform: rotate(-1deg); margin: 10px -10px; }
+  .marquee-track { display: flex; gap: 26px; width: max-content; animation: scroll-x 30s linear infinite; }
+  .marquee-track span { font-family: "Bricolage Grotesque"; font-size: clamp(20px,3vw,32px); font-weight: 800; white-space: nowrap; display: flex; align-items: center; gap: 26px; }
+  .marquee-track span::after { content: "✦"; }
+  @keyframes scroll-x { to { transform: translateX(-50%); } }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 30px; max-width: 920px; }
+  .skill-tags .tag { padding: 6px 14px; box-shadow: var(--shadow-sm); background: var(--paper-2); }
+
+  /* ---------- contact ---------- */
+  .contact-card { background: var(--blue); border: var(--bd); border-radius: var(--r-card); box-shadow: var(--shadow-lg); padding: clamp(36px,6vw,70px); text-align: center; color: var(--paper-2); }
+  .contact-card h2 { font-family: "Bricolage Grotesque"; font-size: clamp(32px,6vw,64px); font-weight: 800; letter-spacing: -1px; line-height: 1.02; margin-bottom: 18px; }
+  .contact-card .em-hl { color: var(--gold); }
+  .contact-card p { max-width: 44ch; margin: 0 auto 30px; font-size: 17px; opacity: .95; }
+  .contact-card .cta-row { justify-content: center; }
+
+  footer { padding: 30px 0 40px; }
+  footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; font-family: "Space Mono"; font-size: 13px; color: var(--ink-soft); }
+
+  /* confetti canvas */
+  #confetti { position: fixed; inset: 0; z-index: 80; pointer-events: none; }
+
+  /* reveal */
+  .reveal { opacity: 0; transform: translateY(26px); transition: opacity .6s var(--ease), transform .6s var(--ease); }
+  .reveal.in { opacity: 1; transform: none; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1 !important; transform: none !important; transition: none; }
+    .blob, .marquee-track, .logo .star, h1 .wave, .now .dot, .avatar, .chip-float { animation: none !important; }
+    html { scroll-behavior: auto; }
+  }
+
+  @media (max-width: 900px) {
+    .hero-grid { grid-template-columns: 1fr; gap: 40px; }
+    .hero-art { min-height: 300px; order: -1; }
+    .proj-grid, .fun-grid { grid-template-columns: 1fr; }
+    .fun-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 640px) {
+    .nav-links { display: none; }
+    .nav-toggle { display: block; }
+    .nav-links.open { display: flex; flex-direction: column; align-items: stretch; position: absolute; top: 64px; right: 24px; background: var(--paper-2); border: var(--bd); border-radius: var(--r-card); box-shadow: var(--shadow); padding: 14px; gap: 8px; }
+    .fun-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="blobs" aria-hidden="true"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div></div>
+<canvas id="confetti" aria-hidden="true"></canvas>
+<span id="top-sentinel" aria-hidden="true" style="position:absolute;top:0;height:1px;width:1px;"></span>
+
+<div class="content">
+<nav id="nav">
+  <div class="nav-inner">
+    <a href="#top" class="logo">aaweg <span class="star">✦</span></a>
+    <div class="nav-links" id="navLinks">
+      <a href="#work">Work</a>
+      <a href="#about">About</a>
+      <a href="#me">The fun bit</a>
+      <a href="https://github.com/Aawegg" target="_blank" rel="noopener">GitHub</a>
+      <a href="#contact" class="sayhi">Say hi 👋</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">☰</button>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <span class="sticker">AI / ML Engineer · Pune</span>
+        <h1 class="display">Hi, I'm Aaweg <span class="wave">👋</span><br>I build AI you can <span class="squig hl-coral">actually trust</span>.</h1>
+        <p class="lead">Multimodal RAG, agents, and the evaluation pipelines that keep them honest. I love the unglamorous part: making sure a system is genuinely good, not just demo-good.</p>
+        <div class="now"><span class="dot"></span> currently: shipping eval pipelines and breaking my own agents on purpose</div>
+        <div class="cta-row">
+          <a class="btn btn-coral" href="#work">See my work</a>
+          <a class="btn btn-paper" href="resume.pdf" target="_blank" rel="noopener">Grab résumé</a>
+        </div>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <div class="avatar">AB</div>
+        <span class="chip-float c1">LangGraph</span>
+        <span class="chip-float c2">RAG</span>
+        <span class="chip-float c3">LLM-as-judge</span>
+        <span class="chip-float c4">MLOps</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section id="about">
+  <div class="wrap">
+    <div class="kicker reveal">a quick hello</div>
+    <h2 class="sec-h reveal" style="margin-bottom:30px;">The short version</h2>
+    <div class="about-card reveal">
+      <p>I'm an AI/ML engineer who's a little obsessed with <span class="squig g hl-green">whether AI systems actually work</span>. Most recently I led an evaluation pod at Turing for frontier AI lab clients, owning task quality across Terminal Bench, SWE-Bench, and OSWorld.</p>
+      <p>Outside of that I build my own things: a multimodal RAG app with a full MLOps loop, a plan-quality auditor calibrated against human graders, and a C++ inference engine because I wanted to know how the magic works underneath. Grounding, guardrails, faithfulness, and proof are my favorite words.</p>
+      <div class="about-stats">
+        <span class="stat-stick">2+ yrs applied AI</span>
+        <span class="stat-stick">LLM eval, team-lead level</span>
+        <span class="stat-stick">multimodal RAG</span>
+        <span class="stat-stick">MLOps end to end</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="work">
+  <div class="wrap">
+    <div class="kicker reveal">stuff I made</div>
+    <h2 class="sec-h reveal" style="margin-bottom:34px;">Things I've built <span class="hl-coral">(and actually shipped)</span></h2>
+    <div class="proj-grid">
+
+      <article class="pcard k-coral reveal">
+        <div class="ptop"><span class="pno">01</span></div>
+        <h3>MosaicMind</h3>
+        <p>Enterprise multimodal RAG over PDF, image, audio, and video. A LangGraph agent (plan, retrieve, synthesize, reflect) with a self-critique loop, hybrid Chroma retrieval, and a full MLOps loop: MLflow, Airflow DAGs, CI/CD, deployed on GCP Cloud Run.</p>
+        <div class="tags"><span class="tag">FastAPI</span><span class="tag">LangGraph</span><span class="tag">LlamaIndex</span><span class="tag">ChromaDB</span><span class="tag">MLflow</span><span class="tag">GCP</span></div>
+        <div class="plinks"><a href="https://github.com/Aawegg/mosaicmind-rag" target="_blank" rel="noopener">Code</a><a href="https://huggingface.co/spaces/Aaweg/mosaicmind" target="_blank" rel="noopener">Live demo</a></div>
+      </article>
+
+      <article class="pcard k-blue reveal">
+        <div class="ptop"><span class="pno">02</span></div>
+        <h3>priorityjudge</h3>
+        <p>A plan-quality auditor: a multi-pass agent (extractor, per-criterion scorers, deterministic citation verifier, synthesizer) on Gemini. Calibrated against a hand-rated set with strong correlation to the human grader and high citation precision; 28 tests keeping it honest.</p>
+        <div class="tags"><span class="tag">Python</span><span class="tag">Pydantic</span><span class="tag">google-genai</span><span class="tag">scipy</span><span class="tag">LLM-as-judge</span></div>
+        <div class="plinks"><a href="https://github.com/Aawegg/priorityjudge" target="_blank" rel="noopener">Code</a></div>
+      </article>
+
+      <article class="pcard k-green reveal">
+        <div class="ptop"><span class="pno">03</span></div>
+        <h3>Roast</h3>
+        <p>A taste-driven critique agent on LangGraph. Point it at a repo, design, PDF, or résumé and it gives a blunt, specific verdict in the voice of a senior reviewer, then argues back across a multi-turn loop. Honestly a little brutal. That's the point.</p>
+        <div class="tags"><span class="tag">Python</span><span class="tag">LangGraph</span><span class="tag">Gemini</span><span class="tag">multimodal</span><span class="tag">CLI</span></div>
+        <div class="plinks"><a href="https://github.com/Aawegg/taste-roaster" target="_blank" rel="noopener">Code</a></div>
+      </article>
+
+      <article class="pcard k-gold reveal">
+        <div class="ptop"><span class="pno">04</span></div>
+        <h3>NibbleCore</h3>
+        <p>An LLM benchmarking and inference engine in C++ with ARM NEON SIMD quantization kernels, plus Docker-in-Docker sandboxes for OS-level agent benchmarks. The deep end of the pool: I wanted to feel the bytes move.</p>
+        <div class="tags"><span class="tag">C++</span><span class="tag">ARM NEON</span><span class="tag">llama.cpp</span><span class="tag">Docker</span></div>
+        <div class="plinks"><a href="https://github.com/Aawegg/nibblecore" target="_blank" rel="noopener">Code</a></div>
+      </article>
+
+    </div>
+
+    <div class="oss reveal">
+      <h3>Plus a little open source on <span class="src">LlamaIndex</span></h3>
+      <p>I found a file-descriptor and connection leak in the HotpotQA eval benchmark from a fresh read of the source, opened an issue with a repro plan, and shipped a fix (<a class="link" href="https://github.com/run-llama/llama_index/pull/21625" target="_blank" rel="noopener">PR #21625</a>). It closed as a duplicate of a concurrent fix. Two people spotting the same leak independently? I'll take that as a thumbs up.</p>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="wrap">
+    <div class="kicker reveal">the resume-y part</div>
+    <h2 class="sec-h reveal" style="margin-bottom:36px;">Where I've worked</h2>
+    <div class="exp">
+      <div class="exp-item reveal">
+        <div class="exp-top">
+          <span class="exp-role">Team Lead, LLM Evaluation Engineer</span>
+          <span class="exp-date">Jan 2025 - Apr 2026</span>
+        </div>
+        <div class="exp-meta">Turing Enterprises · Remote · frontier AI lab clients · rated "Top Performer"</div>
+        <ul>
+          <li>Led an evaluation pod across Terminal Bench, SWE-Bench, and OSWorld: task allocation, review cycles, escalation, and quality alignment.</li>
+          <li>Designed benchmark tasks for frontier agents on real terminal and OS operations; built validation pipelines verifying correctness and instruction-to-test alignment.</li>
+          <li>Built an automated LLM review pipeline with multi-dimension quality checks, client-calibrated scoring, and a false-positive scanner, so reviewers could run evaluations themselves.</li>
+          <li>Implemented hallucination-detection and structure-alignment metrics; authored SFT datasets for math and code reasoning.</li>
+        </ul>
+      </div>
+      <div class="exp-item reveal">
+        <div class="exp-top">
+          <span class="exp-role">ML Engineer (Intern)</span>
+          <span class="exp-date">Jun 2024 - Jan 2025</span>
+        </div>
+        <div class="exp-meta">Tars Technologies · Pune, India</div>
+        <ul>
+          <li>Built a YOLOv8 object-detection model for mine-worker safety monitoring, about 95% accuracy on protective-gear detection.</li>
+          <li>Shipped a face-recognition attendance system for 50+ employees, cutting manual tracking error.</li>
+          <li>Contributed to a full-stack LMS with a focus on the model-serving and inference-API layer.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="me">
+  <div class="wrap">
+    <div class="kicker reveal">the fun bit</div>
+    <h2 class="sec-h reveal" style="margin-bottom:34px;">A few things about me</h2>
+    <div class="fun-grid">
+      <div class="fun reveal"><span class="emo">🧪</span><h4>I break my own stuff</h4><p>I'd rather find the failure mode myself at 2am than let a user find it in prod.</p></div>
+      <div class="fun reveal"><span class="emo">📺</span><h4>I learn in reels</h4><p>I turned my doom-scrolling into a habit of learning RAG and systems in tiny clips.</p></div>
+      <div class="fun reveal"><span class="emo">🛠️</span><h4>Low-level curious</h4><p>Wrote a C++ inference engine just to feel how the tokens actually move.</p></div>
+      <div class="fun reveal"><span class="emo">⚖️</span><h4>Evaluation nerd</h4><p>I think "is it actually good?" is the most underrated question in AI.</p></div>
+      <div class="fun reveal"><span class="emo">☕</span><h4>Pune-based</h4><p>Best ideas arrive with the second cup of chai, usually.</p></div>
+      <div class="fun reveal"><span class="emo">🤝</span><h4>Honest by default</h4><p>I'd rather tell you what a system can't do than oversell what it can.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="skills" style="padding-bottom:50px;">
+  <div class="wrap reveal" style="margin-bottom:30px;">
+    <div class="kicker">my toolbox</div>
+    <h2 class="sec-h">What I work with</h2>
+  </div>
+  <div class="marquee reveal" aria-hidden="true">
+    <div class="marquee-track">
+      <span>LangGraph</span><span>RAG</span><span>LLM-as-judge</span><span>FastAPI</span><span>MLflow</span><span>Airflow</span><span>ChromaDB</span><span>Docker</span><span>GCP</span><span>PyTorch</span>
+      <span>LangGraph</span><span>RAG</span><span>LLM-as-judge</span><span>FastAPI</span><span>MLflow</span><span>Airflow</span><span>ChromaDB</span><span>Docker</span><span>GCP</span><span>PyTorch</span>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="skill-tags reveal">
+      <span class="tag">LangChain</span><span class="tag">LangGraph</span><span class="tag">LlamaIndex</span><span class="tag">RAG</span><span class="tag">Multi-agent</span><span class="tag">Prompt engineering</span><span class="tag">Function calling</span><span class="tag">MCP</span><span class="tag">LLM-as-judge</span><span class="tag">Faithfulness scoring</span><span class="tag">Hallucination detection</span><span class="tag">SFT / RLHF</span><span class="tag">Rubric design</span><span class="tag">Python</span><span class="tag">FastAPI</span><span class="tag">Pydantic</span><span class="tag">Docker</span><span class="tag">MLflow</span><span class="tag">Airflow</span><span class="tag">GitHub Actions</span><span class="tag">pytest</span><span class="tag">ChromaDB</span><span class="tag">GCP</span><span class="tag">PyTorch</span><span class="tag">Hugging Face</span><span class="tag">C / C++</span><span class="tag">TypeScript</span><span class="tag">SQL</span>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap reveal">
+    <div class="contact-card">
+      <h2>Let's build something fun <span class="em-hl">and</span> reliable.</h2>
+      <p>Open to GenAI and AI Engineer roles. I reply fastest to email, and yes, the button does something.</p>
+      <div class="cta-row">
+        <a class="btn btn-coral" id="hiBtn" href="mailto:aawegbhaladhare03@gmail.com">aawegbhaladhare03@gmail.com 🎉</a>
+        <a class="btn btn-paper" href="https://github.com/Aawegg" target="_blank" rel="noopener">GitHub</a>
+        <a class="btn btn-paper" href="https://www.linkedin.com/in/aaweg/" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>Made with chai in Pune ☕</span>
+    <span>© <span id="year"></span> Aaweg Bhaladhare</span>
+  </div>
+</footer>
+</div>
+
+<script>
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* nav scrolled state */
+const nav = document.getElementById('nav');
+new IntersectionObserver(([e]) => nav.classList.toggle('scrolled', !e.isIntersecting), { rootMargin: "-1px 0px 0px 0px" }).observe(document.getElementById('top-sentinel'));
+
+/* mobile menu */
+const toggle = document.getElementById('navToggle');
+const links = document.getElementById('navLinks');
+toggle.addEventListener('click', () => links.classList.toggle('open'));
+links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => links.classList.remove('open')));
+
+/* reveal */
+const io = new IntersectionObserver((es) => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .12 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+document.getElementById('year').textContent = new Date().getFullYear();
+
+/* ---------- confetti ---------- */
+const confetti = (function(){
+  const cv = document.getElementById('confetti');
+  const ctx = cv.getContext('2d');
+  let parts = [], raf = null, dpr = Math.min(devicePixelRatio||1, 2);
+  const colors = ['#FF5A47','#FFB22C','#2FAE66','#3B6FF5','#8B5CF6'];
+  function size(){ cv.width = innerWidth*dpr; cv.height = innerHeight*dpr; cv.style.width = innerWidth+'px'; cv.style.height = innerHeight+'px'; }
+  size(); addEventListener('resize', size);
+  function burst(x, y, n=90){
+    if (reduceMotion) return;
+    for (let i=0;i<n;i++){
+      const a = Math.random()*Math.PI*2, sp = 4+Math.random()*9;
+      parts.push({ x:x*dpr, y:y*dpr, vx:Math.cos(a)*sp*dpr, vy:Math.sin(a)*sp*dpr - 6*dpr, g:0.32*dpr, life:1, rot:Math.random()*6, vr:(Math.random()-.5)*.4, w:(6+Math.random()*6)*dpr, h:(8+Math.random()*8)*dpr, c:colors[i%colors.length] });
+    }
+    if (!raf) raf = requestAnimationFrame(loop);
+  }
+  function loop(){
+    ctx.clearRect(0,0,cv.width,cv.height);
+    parts = parts.filter(p => p.life > 0);
+    for (const p of parts){
+      p.vy += p.g; p.x += p.vx; p.y += p.vy; p.rot += p.vr; p.life -= 0.012;
+      ctx.save(); ctx.globalAlpha = Math.max(0,p.life); ctx.translate(p.x,p.y); ctx.rotate(p.rot);
+      ctx.fillStyle = p.c; ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h); ctx.restore();
+    }
+    if (parts.length) raf = requestAnimationFrame(loop); else { raf = null; ctx.clearRect(0,0,cv.width,cv.height); }
+  }
+  return { burst };
+})();
+
+/* confetti on the contact button */
+const hiBtn = document.getElementById('hiBtn');
+if (hiBtn) hiBtn.addEventListener('click', e => { const r = hiBtn.getBoundingClientRect(); confetti.burst(r.left + r.width/2, r.top + r.height/2); });
+
+/* a little welcome pop once the page settles */
+if (!reduceMotion) addEventListener('load', () => setTimeout(() => confetti.burst(innerWidth/2, innerHeight*0.28, 70), 500));
+</script>
+</body>
+</html>

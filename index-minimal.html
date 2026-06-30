@@ -1,0 +1,447 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Aaweg Bhaladhare - GenAI Engineer</title>
+<meta name="description" content="GenAI engineer building multimodal RAG, agentic systems, and the LLM evaluation pipelines that keep them honest." />
+<meta property="og:title" content="Aaweg Bhaladhare - GenAI Engineer" />
+<meta property="og:description" content="Multimodal RAG, agentic systems, and LLM evaluation." />
+<meta property="og:type" content="website" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  /* ---- tokens: ONE theme (dark), ONE accent (amber), locked everywhere ---- */
+  :root {
+    --bg:        #0c0d10;   /* off-black, not pure #000 */
+    --bg-soft:   #121317;
+    --surface:   #16181d;
+    --border:    #24262e;
+    --border-2:  #2e313a;
+    --text:      #ececef;
+    --muted:     #a2a6b0;
+    --faint:     #6e7280;
+    --accent:    #f5b14a;   /* warm amber - single accent, never changes */
+    --accent-ink:#0c0d10;   /* text that sits ON the accent */
+
+    --r-card: 14px;   /* radius system: cards/blocks = 14px ... */
+    --r-btn:  10px;   /* ... buttons = 10px ... */
+    --r-pill: 999px;  /* ... tags/badges = pill. documented + consistent. */
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; scroll-padding-top: 84px; }
+  body {
+    font-family: "Geist", -apple-system, "Segoe UI", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  a { color: inherit; text-decoration: none; }
+  .mono { font-family: "Geist Mono", ui-monospace, monospace; }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 24px; }
+
+  /* very faint, fixed ambient light - low opacity, pointer-events none (no neon glow) */
+  .ambient {
+    position: fixed; inset: 0; z-index: -1; pointer-events: none;
+    background: radial-gradient(60% 50% at 80% -5%, rgba(245,177,74,0.06), transparent 60%);
+  }
+
+  /* ---------- nav (single line, <= 72px) ---------- */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(12, 13, 16, 0.72);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid transparent;
+    transition: border-color .3s, background .3s;
+  }
+  nav.scrolled { border-bottom: 1px solid var(--border); }
+  .nav-inner {
+    max-width: 1040px; margin: 0 auto; padding: 16px 24px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .logo { font-weight: 700; font-size: 17px; letter-spacing: -0.3px; }
+  .logo .dot { color: var(--accent); }
+  .nav-links { display: flex; align-items: center; gap: 26px; }
+  .nav-links a { color: var(--muted); font-size: 14px; font-weight: 500; transition: color .2s; }
+  .nav-links a:hover { color: var(--text); }
+  .nav-toggle { display: none; background: none; border: none; color: var(--text); font-size: 22px; cursor: pointer; }
+
+  /* ---------- hero (<= 4 text elements, fits viewport) ---------- */
+  header.hero {
+    min-height: 100dvh; display: flex; align-items: center;
+    padding: 96px 0 72px;
+  }
+  .badge {
+    display: inline-flex; align-items: center; gap: 9px;
+    border: 1px solid var(--border-2); background: var(--bg-soft);
+    padding: 6px 14px; border-radius: var(--r-pill); font-size: 13px; color: var(--muted);
+    margin-bottom: 26px;
+  }
+  .badge .dot-live {
+    width: 7px; height: 7px; border-radius: 50%; background: var(--accent);
+    box-shadow: 0 0 0 0 rgba(245,177,74,0.6); animation: pulse 2.4s infinite;
+  }
+  @keyframes pulse {
+    0%   { box-shadow: 0 0 0 0 rgba(245,177,74,0.45); }
+    70%  { box-shadow: 0 0 0 7px rgba(245,177,74,0); }
+    100% { box-shadow: 0 0 0 0 rgba(245,177,74,0); }
+  }
+  h1 {
+    font-size: clamp(40px, 7vw, 66px); font-weight: 700; letter-spacing: -2px;
+    line-height: 1.04; margin-bottom: 22px; max-width: 16ch;
+  }
+  h1 .role { color: var(--accent); }
+  .hero p.lead {
+    font-size: clamp(16px, 2.2vw, 19px); color: var(--muted);
+    max-width: 60ch; margin-bottom: 34px;
+  }
+  .cta-row { display: flex; flex-wrap: wrap; gap: 12px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 12px 22px; border-radius: var(--r-btn); font-weight: 600; font-size: 14.5px;
+    transition: transform .15s ease, background .2s, border-color .2s, color .2s;
+  }
+  .btn:active { transform: translateY(1px); }
+  .btn-primary { background: var(--accent); color: var(--accent-ink); }
+  .btn-primary:hover { transform: translateY(-2px); background: #ffc163; }
+  .btn-ghost { border: 1px solid var(--border-2); color: var(--text); background: transparent; }
+  .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* ---------- sections ---------- */
+  section { padding: 88px 0; }
+  .sec-head { margin-bottom: 42px; max-width: 65ch; }
+  .sec-head h2 { font-size: clamp(27px, 4vw, 38px); font-weight: 700; letter-spacing: -1px; }
+  .eyebrow { font-family: "Geist Mono", monospace; color: var(--accent); font-size: 13px; margin-bottom: 10px; letter-spacing: .04em; }
+
+  /* ---------- about ---------- */
+  .about-grid { display: grid; grid-template-columns: 1.45fr 1fr; gap: 44px; align-items: start; }
+  .about p { color: var(--muted); margin-bottom: 16px; font-size: 16px; }
+  .about strong { color: var(--text); font-weight: 600; }
+  .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .stat {
+    border: 1px solid var(--border); background: var(--surface); border-radius: var(--r-card);
+    padding: 20px;
+  }
+  .stat .num { font-size: 24px; font-weight: 700; color: var(--accent); }
+  .stat .lbl { color: var(--faint); font-size: 13px; margin-top: 3px; }
+
+  /* ---------- experience ---------- */
+  .exp { border-left: 1px solid var(--border-2); padding-left: 28px; }
+  .exp-item { padding-bottom: 38px; position: relative; }
+  .exp-item:last-child { padding-bottom: 0; }
+  .exp-item::before {
+    content: ""; position: absolute; left: -34px; top: 7px; width: 11px; height: 11px;
+    border-radius: 50%; background: var(--accent); border: 3px solid var(--bg);
+  }
+  .exp-top { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 6px; align-items: baseline; }
+  .exp-role { font-size: 18px; font-weight: 600; }
+  .exp-co { color: var(--accent); font-weight: 600; }
+  .exp-date { color: var(--faint); font-size: 13px; font-family: "Geist Mono", monospace; }
+  .exp-meta { color: var(--faint); font-size: 13.5px; margin: 4px 0 12px; }
+  .exp ul { list-style: none; }
+  .exp li { color: var(--muted); font-size: 15px; margin-bottom: 8px; padding-left: 20px; position: relative; }
+  .exp li::before { content: "›"; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
+
+  /* ---------- projects (2x2, exact cell count, no emoji icons) ---------- */
+  .proj-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  .card {
+    background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-card);
+    padding: 26px; transition: transform .2s, border-color .2s;
+    display: flex; flex-direction: column;
+  }
+  .card:hover { transform: translateY(-3px); border-color: var(--border-2); }
+  .card-top { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 10px; }
+  .card h3 { font-size: 19px; font-weight: 600; }
+  .card-links { display: flex; gap: 14px; flex-shrink: 0; }
+  .card-links a { color: var(--faint); font-size: 13px; font-weight: 600; transition: color .2s; }
+  .card-links a:hover { color: var(--accent); }
+  .card p { color: var(--muted); font-size: 14.5px; margin-bottom: 18px; flex: 1; }
+  .tags { display: flex; flex-wrap: wrap; gap: 7px; }
+  .tag {
+    font-family: "Geist Mono", monospace; font-size: 11.5px; color: var(--muted);
+    background: var(--bg-soft); border: 1px solid var(--border); padding: 4px 10px; border-radius: var(--r-pill);
+  }
+
+  /* ---------- oss callout ---------- */
+  .oss {
+    margin-top: 20px; background: var(--bg-soft); border: 1px solid var(--border);
+    border-radius: var(--r-card); padding: 26px 28px;
+  }
+  .oss h3 { font-size: 17px; margin-bottom: 8px; font-weight: 600; }
+  .oss h3 .src { color: var(--accent); }
+  .oss p { color: var(--muted); font-size: 14.5px; }
+  .oss a.link { color: var(--accent); font-weight: 600; }
+
+  /* ---------- skills ---------- */
+  .skill-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  .skill-block { border: 1px solid var(--border); background: var(--surface); border-radius: var(--r-card); padding: 22px; }
+  .skill-block h4 { font-size: 12.5px; text-transform: uppercase; letter-spacing: .08em; color: var(--faint); margin-bottom: 14px; }
+  .skill-block .tags .tag { background: transparent; }
+
+  /* ---------- contact ---------- */
+  .contact { text-align: center; }
+  .contact h2 { font-size: clamp(28px, 5vw, 44px); font-weight: 700; letter-spacing: -1px; margin-bottom: 14px; }
+  .contact p { color: var(--muted); max-width: 46ch; margin: 0 auto 30px; }
+
+  footer { border-top: 1px solid var(--border); padding: 28px 0; text-align: center; color: var(--faint); font-size: 13px; }
+
+  /* ---------- reveal (motion honors reduced-motion) ---------- */
+  .reveal { opacity: 0; transform: translateY(20px); transition: opacity .6s cubic-bezier(.16,1,.3,1), transform .6s cubic-bezier(.16,1,.3,1); }
+  .reveal.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
+    .badge .dot-live { animation: none; }
+    html { scroll-behavior: auto; }
+  }
+
+  /* ---------- responsive ---------- */
+  @media (max-width: 820px) {
+    .about-grid { grid-template-columns: 1fr; }
+    .proj-grid, .skill-grid { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+    .nav-toggle { display: block; }
+    .nav-links.open {
+      display: flex; flex-direction: column; align-items: flex-start; position: absolute; top: 60px; right: 24px;
+      background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-card); padding: 18px 24px; gap: 16px;
+    }
+  }
+</style>
+</head>
+<body>
+<div class="ambient" aria-hidden="true"></div>
+<span id="top-sentinel" aria-hidden="true" style="position:absolute;top:0;height:1px;width:1px;"></span>
+
+<nav id="nav">
+  <div class="nav-inner">
+    <a href="#top" class="logo">aaweg<span class="dot">.</span></a>
+    <div class="nav-links" id="navLinks">
+      <a href="#about">About</a>
+      <a href="#experience">Experience</a>
+      <a href="#projects">Projects</a>
+      <a href="#skills">Skills</a>
+      <a href="https://github.com/Aawegg" target="_blank" rel="noopener">GitHub</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">☰</button>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap">
+    <div class="badge"><span class="dot-live"></span> Open to GenAI / AI Engineer roles · Pune or Remote</div>
+    <h1>Aaweg Bhaladhare, <span class="role">GenAI engineer</span></h1>
+    <p class="lead">I build multimodal RAG systems, agentic workflows, and the LLM evaluation pipelines that keep them honest. I live in the gap between a research prototype and something that actually ships and stays reliable.</p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="#projects">View projects</a>
+      <a class="btn btn-ghost" href="resume.pdf" target="_blank" rel="noopener">Résumé</a>
+    </div>
+  </div>
+</header>
+
+<section id="about">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <h2>Builder at the research to production seam</h2>
+    </div>
+    <div class="about-grid about">
+      <div class="reveal">
+        <p>I'm an AI/ML engineer focused on <strong>LLM evaluation</strong> and shipping <strong>GenAI systems</strong>. Most recently I led an evaluation pod at <strong>Turing</strong> for frontier AI lab clients, working on Terminal Bench, SWE-Bench, and OSWorld, where I owned task quality and built automated review pipelines.</p>
+        <p>Alongside that I ship my own systems: a multimodal RAG application with a full MLOps loop, a plan-quality auditor calibrated against human graders, and a C++ inference engine. The thread through all of it is <strong>evaluation and reliability</strong>, making sure an AI system is actually good, not just impressive in a demo.</p>
+        <p>I care most about the unglamorous part: grounding, guardrails, faithfulness, and the evidence that proves a system works.</p>
+      </div>
+      <div class="stats reveal">
+        <div class="stat"><div class="num">2+ yrs</div><div class="lbl">Applied AI / ML</div></div>
+        <div class="stat"><div class="num">RAG</div><div class="lbl">Multimodal &amp; agentic</div></div>
+        <div class="stat"><div class="num">LLM eval</div><div class="lbl">Team-lead level</div></div>
+        <div class="stat"><div class="num">MLOps</div><div class="lbl">Ship, monitor, retrain</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="experience" style="background:var(--bg-soft);">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <h2>Where I've worked</h2>
+    </div>
+    <div class="exp">
+      <div class="exp-item reveal">
+        <div class="exp-top">
+          <span class="exp-role">Team Lead, LLM Evaluation Engineer</span>
+          <span class="exp-date">Jan 2025 - Apr 2026</span>
+        </div>
+        <div class="exp-meta"><span class="exp-co">Turing Enterprises</span> · Remote · frontier AI lab clients · rated "Top Performer"</div>
+        <ul>
+          <li>Led an evaluation pod across Terminal Bench, SWE-Bench, and OSWorld: task allocation, review cycles, escalation, and quality alignment.</li>
+          <li>Designed benchmark tasks evaluating frontier agents on real terminal and OS operations; built validation pipelines verifying correctness and instruction-to-test alignment.</li>
+          <li>Built an automated LLM review pipeline with multi-dimension quality checks, client-calibrated scoring, and a false-positive scanner, so reviewers could run evaluations themselves.</li>
+          <li>Implemented hallucination-detection and structure-alignment metrics; authored SFT datasets for math and code reasoning.</li>
+          <li>Ran knowledge-transfer sessions and served as primary escalation point for spec interpretation.</li>
+        </ul>
+      </div>
+      <div class="exp-item reveal">
+        <div class="exp-top">
+          <span class="exp-role">ML Engineer (Intern)</span>
+          <span class="exp-date">Jun 2024 - Jan 2025</span>
+        </div>
+        <div class="exp-meta"><span class="exp-co">Tars Technologies</span> · Pune, India</div>
+        <ul>
+          <li>Built a YOLOv8 object-detection model for mine-worker safety monitoring, about 95% accuracy on protective-gear detection.</li>
+          <li>Shipped a face-recognition attendance system for 50+ employees, cutting manual tracking error.</li>
+          <li>Contributed to a full-stack LMS with a focus on the model-serving and inference-API layer.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="eyebrow mono">// projects</div>
+      <h2>Things I've built</h2>
+    </div>
+    <div class="proj-grid">
+
+      <div class="card reveal">
+        <div class="card-top">
+          <h3>MosaicMind</h3>
+          <div class="card-links">
+            <a href="https://github.com/Aawegg/mosaicmind-rag" target="_blank" rel="noopener">Code</a>
+            <a href="https://huggingface.co/spaces/Aaweg/mosaicmind" target="_blank" rel="noopener">Live</a>
+          </div>
+        </div>
+        <p>Enterprise multimodal RAG over PDF, image, audio, and video. A LangGraph agent (plan, retrieve, synthesize, reflect) with a self-critique loop, hybrid Chroma retrieval, and a full MLOps loop: MLflow tracking, Airflow re-index and eval DAGs, CI/CD, deployed on GCP Cloud Run.</p>
+        <div class="tags">
+          <span class="tag">FastAPI</span><span class="tag">LangGraph</span><span class="tag">LlamaIndex</span><span class="tag">ChromaDB</span><span class="tag">MLflow</span><span class="tag">Airflow</span><span class="tag">Docker</span><span class="tag">GCP</span>
+        </div>
+      </div>
+
+      <div class="card reveal">
+        <div class="card-top">
+          <h3>priorityjudge</h3>
+          <div class="card-links">
+            <a href="https://github.com/Aawegg/priorityjudge" target="_blank" rel="noopener">Code</a>
+          </div>
+        </div>
+        <p>A plan-quality auditor: a multi-pass agent (extractor, per-criterion scorers, deterministic citation verifier, synthesizer) on Gemini. Calibrated against a hand-rated set with strong rank correlation to the human grader and high citation precision; 28 tests covering rubric integrity and citer determinism.</p>
+        <div class="tags">
+          <span class="tag">Python</span><span class="tag">Pydantic</span><span class="tag">google-genai</span><span class="tag">scipy</span><span class="tag">LLM-as-judge</span><span class="tag">CI</span>
+        </div>
+      </div>
+
+      <div class="card reveal">
+        <div class="card-top">
+          <h3>Roast</h3>
+          <div class="card-links">
+            <a href="https://github.com/Aawegg/taste-roaster" target="_blank" rel="noopener">Code</a>
+          </div>
+        </div>
+        <p>A taste-driven critique agent on LangGraph. Point it at a repo, design, PDF, or résumé and it returns a blunt, specific verdict in the voice of a senior reviewer, then concedes or holds its ground when you push back across a multi-turn loop. Ingests mixed artifacts into one digest; state persisted with a checkpointer.</p>
+        <div class="tags">
+          <span class="tag">Python</span><span class="tag">LangGraph</span><span class="tag">Gemini</span><span class="tag">multimodal</span><span class="tag">CLI</span>
+        </div>
+      </div>
+
+      <div class="card reveal">
+        <div class="card-top">
+          <h3>NibbleCore</h3>
+          <div class="card-links">
+            <a href="https://github.com/Aawegg/nibblecore" target="_blank" rel="noopener">Code</a>
+          </div>
+        </div>
+        <p>An LLM benchmarking and inference engine in C++ with ARM NEON SIMD quantization kernels, plus Docker-in-Docker sandbox orchestration for OS-level agent benchmarks and recursive multi-agent evaluators. A deep dive into the low-level side of inference.</p>
+        <div class="tags">
+          <span class="tag">C++</span><span class="tag">ARM NEON</span><span class="tag">llama.cpp</span><span class="tag">Docker</span><span class="tag">Python</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="oss reveal">
+      <h3>Open source: <span class="src">LlamaIndex</span></h3>
+      <p>Independently diagnosed a file-descriptor and connection leak in the HotpotQA evaluation benchmark from a fresh read of the source, opened an issue with a reproduction plan, and submitted a fix (<a class="link" href="https://github.com/run-llama/llama_index/pull/21625" target="_blank" rel="noopener">PR #21625</a>). It was closed as a duplicate of a concurrent fix for the same bug. Two contributors independently spotting the same leak confirmed the diagnosis.</p>
+    </div>
+  </div>
+</section>
+
+<section id="skills" style="background:var(--bg-soft);">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <h2>What I work with</h2>
+    </div>
+    <div class="skill-grid">
+      <div class="skill-block reveal">
+        <h4>LLMs &amp; agents</h4>
+        <div class="tags">
+          <span class="tag">LangChain</span><span class="tag">LangGraph</span><span class="tag">LlamaIndex</span><span class="tag">RAG</span><span class="tag">Multi-agent</span><span class="tag">Prompt engineering</span><span class="tag">Function calling</span><span class="tag">MCP</span>
+        </div>
+      </div>
+      <div class="skill-block reveal">
+        <h4>Evaluation &amp; RLHF</h4>
+        <div class="tags">
+          <span class="tag">LLM-as-judge</span><span class="tag">Faithfulness scoring</span><span class="tag">Hallucination detection</span><span class="tag">RAG eval</span><span class="tag">Spearman / Kendall</span><span class="tag">SFT / RLHF</span><span class="tag">Rubric design</span>
+        </div>
+      </div>
+      <div class="skill-block reveal">
+        <h4>Backend &amp; MLOps</h4>
+        <div class="tags">
+          <span class="tag">Python</span><span class="tag">FastAPI</span><span class="tag">Pydantic</span><span class="tag">Docker</span><span class="tag">MLflow</span><span class="tag">Airflow</span><span class="tag">GitHub Actions</span><span class="tag">pytest</span>
+        </div>
+      </div>
+      <div class="skill-block reveal">
+        <h4>Data, cloud &amp; languages</h4>
+        <div class="tags">
+          <span class="tag">ChromaDB</span><span class="tag">Vector search</span><span class="tag">GCP</span><span class="tag">PyTorch</span><span class="tag">Hugging Face</span><span class="tag">C / C++</span><span class="tag">TypeScript</span><span class="tag">SQL</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="contact">
+  <div class="wrap reveal">
+    <h2>Let's build something reliable</h2>
+    <p>Open to GenAI and AI Engineer roles. The fastest way to reach me is email.</p>
+    <div class="cta-row" style="justify-content:center;">
+      <a class="btn btn-primary" href="mailto:aawegbhaladhare03@gmail.com">aawegbhaladhare03@gmail.com</a>
+      <a class="btn btn-ghost" href="https://github.com/Aawegg" target="_blank" rel="noopener">GitHub</a>
+      <a class="btn btn-ghost" href="https://www.linkedin.com/in/aaweg/" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    Built by Aaweg Bhaladhare · Pune, India · <span id="year"></span>
+  </div>
+</footer>
+
+<script>
+  // nav scrolled state via IntersectionObserver on a top sentinel (no scroll listener)
+  const nav = document.getElementById('nav');
+  const sentinel = document.getElementById('top-sentinel');
+  new IntersectionObserver(([e]) => {
+    nav.classList.toggle('scrolled', !e.isIntersecting);
+  }, { rootMargin: "-1px 0px 0px 0px", threshold: 0 }).observe(sentinel);
+
+  // mobile menu
+  const toggle = document.getElementById('navToggle');
+  const links = document.getElementById('navLinks');
+  toggle.addEventListener('click', () => links.classList.toggle('open'));
+  links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => links.classList.remove('open')));
+
+  // reveal on scroll
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
