@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Aaweg Bhaladhare - GenAI Engineer</title>
-<meta name="description" content="Hi, I'm Aaweg. I build AI systems you can actually trust: multimodal RAG, agents, and the evaluation that keeps them honest." />
-<meta property="og:title" content="Aaweg Bhaladhare - GenAI Engineer" />
-<meta property="og:description" content="I build AI you can actually trust." />
+<title>Aaweg Bhaladhare - Applied AI Engineer</title>
+<meta name="description" content="Hi, I'm Aaweg. I build the environments, verifiers and evals that AI agents get graded on, and the agents themselves." />
+<meta property="og:title" content="Aaweg Bhaladhare - Applied AI Engineer" />
+<meta property="og:description" content="I build the tests AI agents get graded on, and find out when the scores are wrong." />
 <meta property="og:type" content="website" />
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='24' fill='%23FF5A47'/%3E%3Ctext x='50' y='73' font-family='monospace' font-size='62' font-weight='700' fill='%23211e1a' text-anchor='middle'%3Ea%3C/text%3E%3C/svg%3E" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -153,6 +153,7 @@
   .exp-item:last-child { padding-bottom: 0; }
   .exp-item::before { content: ""; position: absolute; left: -40px; top: 4px; width: 16px; height: 16px; border-radius: 50%; border: var(--bd); background: var(--coral); }
   .exp-item:nth-child(2)::before { background: var(--blue); }
+  .exp-item:nth-child(3)::before { background: var(--gold); }
   .exp-top { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 6px; align-items: baseline; }
   .exp-role { font-family: "Bricolage Grotesque"; font-size: 21px; font-weight: 800; }
   .exp-date { font-family: "Space Mono"; color: var(--ink-soft); font-size: 13px; }
@@ -241,10 +242,10 @@
   <div class="wrap">
     <div class="hero-grid">
       <div>
-        <span class="sticker">AI / ML Engineer · Pune</span>
-        <h1 class="display">Hi, I'm Aaweg <span class="wave">👋</span><br>I build AI you can <span class="squig hl-coral">actually trust</span>.</h1>
-        <p class="lead">Multimodal RAG, agents, and the evaluation pipelines that keep them honest. I love the unglamorous part: making sure a system is genuinely good, not just demo-good.</p>
-        <div class="now"><span class="dot"></span> currently: shipping eval pipelines and breaking my own agents on purpose</div>
+        <span class="sticker">Applied AI Engineer · Pune</span>
+        <h1 class="display">Hi, I'm Aaweg <span class="wave">👋</span><br>I build the tests AI agents <span class="squig hl-coral">get graded on</span>.</h1>
+        <p class="lead">RL environments, agent benchmarks and the verifiers that score them, plus the agents and RAG systems themselves. My favourite part is finding out when a score is lying.</p>
+        <div class="now"><span class="dot"></span> currently: building agent benchmarks on Harbor · 400+ tasks and counting</div>
         <div class="cta-row">
           <a class="btn btn-coral" href="#work">See my work</a>
           <a class="btn btn-paper" href="resume.pdf" target="_blank" rel="noopener">Grab résumé</a>
@@ -252,10 +253,10 @@
       </div>
       <div class="hero-art" aria-hidden="true">
         <div class="avatar">AB</div>
-        <span class="chip-float c1">LangGraph</span>
-        <span class="chip-float c2">RAG</span>
+        <span class="chip-float c1">Harbor</span>
+        <span class="chip-float c2">RL envs</span>
         <span class="chip-float c3">LLM-as-judge</span>
-        <span class="chip-float c4">MLOps</span>
+        <span class="chip-float c4">MCP</span>
       </div>
     </div>
   </div>
@@ -266,13 +267,13 @@
     <div class="kicker reveal">a quick hello</div>
     <h2 class="sec-h reveal" style="margin-bottom:30px;">The short version</h2>
     <div class="about-card reveal">
-      <p>I'm an AI/ML engineer who's a little obsessed with <span class="squig g hl-green">whether AI systems actually work</span>. Most recently I led an evaluation pod at Turing for frontier AI lab clients, owning task quality across Terminal Bench, SWE-Bench, and OSWorld.</p>
-      <p>Outside of that I build my own things: a multimodal RAG app with a full MLOps loop, a plan-quality auditor calibrated against human graders, and a C++ inference engine because I wanted to know how the magic works underneath. Grounding, guardrails, faithfulness, and proof are my favorite words.</p>
+      <p>I'm an applied AI engineer who's a little obsessed with <span class="squig g hl-green">whether AI systems actually work</span>. At Turing I build agent benchmarks in Harbor format (terminal, multi-agent and enterprise-tool tasks with deterministic verifiers), and I led an evaluation pod on Terminal Bench, OS Bench and SWE-Bench.</p>
+      <p>Outside of that I build my own things: an RL agent for a Kaggle simulation competition (provisional silver), hand-written ARM NEON quantization kernels, an LLM judge calibrated against a human grader, and a multimodal RAG app. Proof beats vibes.</p>
       <div class="about-stats">
-        <span class="stat-stick">2+ yrs applied AI</span>
-        <span class="stat-stick">LLM eval, team-lead level</span>
-        <span class="stat-stick">multimodal RAG</span>
-        <span class="stat-stick">MLOps end to end</span>
+        <span class="stat-stick">400+ benchmark tasks</span>
+        <span class="stat-stick">eval pod lead</span>
+        <span class="stat-stick">Kaggle silver (provisional)</span>
+        <span class="stat-stick">merged OSS PRs</span>
       </div>
     </div>
   </div>
@@ -286,41 +287,57 @@
 
       <article class="pcard k-coral reveal">
         <div class="ptop"><span class="pno">01</span></div>
-        <h3>MosaicMind</h3>
-        <p>Enterprise multimodal RAG over PDF, image, audio, and video. A LangGraph agent (plan, retrieve, synthesize, reflect) with a self-critique loop, hybrid Chroma retrieval, and a full MLOps loop: MLflow, Airflow DAGs, CI/CD, deployed on GCP Cloud Run.</p>
-        <div class="tags"><span class="tag">FastAPI</span><span class="tag">LangGraph</span><span class="tag">LlamaIndex</span><span class="tag">ChromaDB</span><span class="tag">MLflow</span><span class="tag">GCP</span></div>
-        <div class="plinks"><a href="https://github.com/Aawegg/mosaicmind-rag" target="_blank" rel="noopener">Code</a><a href="https://huggingface.co/spaces/Aaweg/mosaicmind" target="_blank" rel="noopener">Live demo</a></div>
+        <h3>Kaggriculture (Kaggle)</h3>
+        <p>An RL agent for a farming simulation competition: provisional silver, around the top 1% of 10,246 teams. I built a C++ replica of the game engine (move-for-move parity, ~1.5M games an hour) and trained a late-game policy with PPO that added about $400 a game on 2,400 fresh games. Biggest lesson: a behaviour-cloned copy of the #1 player was 81% accurate offline and still lost live.</p>
+        <div class="tags"><span class="tag">C++</span><span class="tag">Python</span><span class="tag">PyTorch</span><span class="tag">PPO</span><span class="tag">simulation</span></div>
+        <div class="plinks"><a href="https://www.kaggle.com/competitions/kaggriculture" target="_blank" rel="noopener">Competition</a></div>
       </article>
 
       <article class="pcard k-blue reveal">
         <div class="ptop"><span class="pno">02</span></div>
-        <h3>priorityjudge</h3>
-        <p>A plan-quality auditor: a multi-pass agent (extractor, per-criterion scorers, deterministic citation verifier, synthesizer) on Gemini. Calibrated against a hand-rated set with strong correlation to the human grader and high citation precision; 28 tests keeping it honest.</p>
-        <div class="tags"><span class="tag">Python</span><span class="tag">Pydantic</span><span class="tag">google-genai</span><span class="tag">scipy</span><span class="tag">LLM-as-judge</span></div>
-        <div class="plinks"><a href="https://github.com/Aawegg/priorityjudge" target="_blank" rel="noopener">Code</a></div>
+        <h3>NibbleCore</h3>
+        <p>From-scratch 4-bit (Q4_0) quantization kernels in C++ with ARM NEON SIMD and a GGUF loader, benchmarked on real SmolLM2 weights: 3.4x faster dequantization than llama.cpp's scalar reference and a 4.8x faster SDOT dot product, with bit-identical output.</p>
+        <div class="tags"><span class="tag">C++</span><span class="tag">ARM NEON</span><span class="tag">GGUF</span><span class="tag">llama.cpp</span></div>
+        <div class="plinks"><a href="https://github.com/Aawegg/nibblecore" target="_blank" rel="noopener">Code</a></div>
       </article>
 
       <article class="pcard k-green reveal">
         <div class="ptop"><span class="pno">03</span></div>
-        <h3>Roast</h3>
-        <p>A taste-driven critique agent on LangGraph. Point it at a repo, design, PDF, or résumé and it gives a blunt, specific verdict in the voice of a senior reviewer, then argues back across a multi-turn loop. Honestly a little brutal. That's the point.</p>
-        <div class="tags"><span class="tag">Python</span><span class="tag">LangGraph</span><span class="tag">Gemini</span><span class="tag">multimodal</span><span class="tag">CLI</span></div>
-        <div class="plinks"><a href="https://github.com/Aawegg/taste-roaster" target="_blank" rel="noopener">Code</a></div>
+        <h3>priorityjudge</h3>
+        <p>A multi-pass LLM judge for plans and PRDs (extractor, five per-criterion scorers, a deterministic citation verifier, synthesizer). On a 6-plan calibration set: 9887/10000, perfect rank correlation with the human grader, 96.5% citation precision and 99.6% test-retest stability. About 30 CI tests keep it honest.</p>
+        <div class="tags"><span class="tag">Python</span><span class="tag">Pydantic</span><span class="tag">Gemini</span><span class="tag">LLM-as-judge</span></div>
+        <div class="plinks"><a href="https://github.com/Aawegg/priorityjudge" target="_blank" rel="noopener">Code</a></div>
       </article>
 
       <article class="pcard k-gold reveal">
         <div class="ptop"><span class="pno">04</span></div>
-        <h3>NibbleCore</h3>
-        <p>An LLM benchmarking and inference engine in C++ with ARM NEON SIMD quantization kernels, plus Docker-in-Docker sandboxes for OS-level agent benchmarks. The deep end of the pool: I wanted to feel the bytes move.</p>
-        <div class="tags"><span class="tag">C++</span><span class="tag">ARM NEON</span><span class="tag">llama.cpp</span><span class="tag">Docker</span></div>
-        <div class="plinks"><a href="https://github.com/Aawegg/nibblecore" target="_blank" rel="noopener">Code</a></div>
+        <h3>MosaicMind</h3>
+        <p>Multimodal RAG over PDF, image, audio and video. A LangGraph agent (plan, retrieve, synthesize, reflect) over two ChromaDB stores with Gemini and CLIP embeddings, plus MLflow tracking, Airflow jobs and CI. Live on Hugging Face Spaces.</p>
+        <div class="tags"><span class="tag">FastAPI</span><span class="tag">LangGraph</span><span class="tag">LlamaIndex</span><span class="tag">ChromaDB</span><span class="tag">MLflow</span></div>
+        <div class="plinks"><a href="https://github.com/Aawegg/mosaicmind-rag" target="_blank" rel="noopener">Code</a><a href="https://huggingface.co/spaces/Aaweg/mosaicmind" target="_blank" rel="noopener">Live demo</a></div>
+      </article>
+
+      <article class="pcard k-coral reveal">
+        <div class="ptop"><span class="pno">05</span></div>
+        <h3>SwarmBench harness</h3>
+        <p>A portable harness for running Harbor multi-agent benchmark tasks (oracle, single-agent and multi-agent runs) on free GitHub Codespaces with Docker-in-Docker. No local Docker, no cloud bill.</p>
+        <div class="tags"><span class="tag">Harbor</span><span class="tag">Docker</span><span class="tag">Bash</span><span class="tag">Codespaces</span></div>
+        <div class="plinks"><a href="https://github.com/Aawegg/swarmbench-codespaces-harness" target="_blank" rel="noopener">Code</a></div>
+      </article>
+
+      <article class="pcard k-blue reveal">
+        <div class="ptop"><span class="pno">06</span></div>
+        <h3>mcp-arena (WIP)</h3>
+        <p>A reliability scorecard for MCP servers: schema conformance, tool reliability and hygiene, with LLM-judged agent tasks on the roadmap. First reference run scored 5750/7000 with 13/13 tools succeeding.</p>
+        <div class="tags"><span class="tag">Python</span><span class="tag">MCP</span><span class="tag">evals</span></div>
+        <div class="plinks"><a href="https://github.com/Aawegg/mcp-arena" target="_blank" rel="noopener">Code</a></div>
       </article>
 
     </div>
 
-    <div class="oss reveal">
-      <h3>Plus a little open source on <span class="src">LlamaIndex</span></h3>
-      <p>I found a file-descriptor and connection leak in the HotpotQA eval benchmark from a fresh read of the source, opened an issue with a repro plan, and shipped a fix (<a class="link" href="https://github.com/run-llama/llama_index/pull/21625" target="_blank" rel="noopener">PR #21625</a>). It closed as a duplicate of a concurrent fix. Two people spotting the same leak independently? I'll take that as a thumbs up.</p>
+<div class="oss reveal">
+      <h3>Plus some merged open source in <span class="src">Rhesis</span> and <span class="src">OGX (Llama Stack)</span></h3>
+      <p>Rhesis (an AI testing platform): stopped empty test sets from being scheduled for execution, with tests (<a class="link" href="https://github.com/rhesis-ai/rhesis/pull/2173" target="_blank" rel="noopener">PR #2173</a>). OGX / Llama Stack: fixed the Gemini provider auth docs to match the mutually exclusive api_key / access_token behaviour (<a class="link" href="https://github.com/ogx-ai/ogx/pull/6341" target="_blank" rel="noopener">PR #6341</a>).</p>
     </div>
   </div>
 </section>
@@ -332,15 +349,26 @@
     <div class="exp">
       <div class="exp-item reveal">
         <div class="exp-top">
-          <span class="exp-role">Team Lead, LLM Evaluation Engineer</span>
-          <span class="exp-date">Jan 2025 - Apr 2026</span>
+          <span class="exp-role">Pod Lead, LLM Evaluation</span>
+          <span class="exp-date">Jan 2025 - Present</span>
         </div>
-        <div class="exp-meta">Turing Enterprises · Remote · frontier AI lab clients · rated "Top Performer"</div>
+        <div class="exp-meta">Turing · Remote · contract (Research Analyst until Sep 2025)</div>
         <ul>
-          <li>Led an evaluation pod across Terminal Bench, SWE-Bench, and OSWorld: task allocation, review cycles, escalation, and quality alignment.</li>
-          <li>Designed benchmark tasks for frontier agents on real terminal and OS operations; built validation pipelines verifying correctness and instruction-to-test alignment.</li>
-          <li>Built an automated LLM review pipeline with multi-dimension quality checks, client-calibrated scoring, and a false-positive scanner, so reviewers could run evaluations themselves.</li>
-          <li>Implemented hallucination-detection and structure-alignment metrics; authored SFT datasets for math and code reasoning.</li>
+          <li>Built 300+ Harbor benchmark tasks where agents operate sandboxed Slack, GitHub, Linear and Notion over MCP, graded by deterministic database-state verifiers, with oracle runs at 1.0 and decoy paths proven to fail.</li>
+          <li>Built the GCP runner fleet behind them: job queue, multi-node dashboard, and a streaming proxy that fixed a gateway bug crashing every agent run.</li>
+          <li>Found that most 0/4 model scores on one batch were the agent's context compaction dropping required labels, not the model (61-75% vs 0% label failures), and traced a fleet-wide boot failure to a 2-CPU cap against a hard-coded 40s budget.</li>
+          <li>Authored 18 multi-agent tasks; one scored 0.32 single-agent vs 0.70 multi-agent and was called one of the strongest designs in the batch.</li>
+          <li>Led a contributor pod on Terminal Bench, OS Bench and SWE-Bench; extended a QA reviewer for agent trajectories (rule checks plus an LLM judge).</li>
+        </ul>
+      </div>
+      <div class="exp-item reveal">
+        <div class="exp-top">
+          <span class="exp-role">Terminal-Bench Task Author</span>
+          <span class="exp-date">May 2026 - Jul 2026</span>
+        </div>
+        <div class="exp-meta">Independent contractor · Remote</div>
+        <ul>
+          <li>Authored 110 hard Terminal-Bench tasks in Python and C++, each a Docker environment with a deterministic pytest oracle that shortcuts can't pass; 61 accepted by the client.</li>
         </ul>
       </div>
       <div class="exp-item reveal">
@@ -351,8 +379,7 @@
         <div class="exp-meta">Tars Technologies · Pune, India</div>
         <ul>
           <li>Built a YOLOv8 object-detection model for mine-worker safety monitoring, about 95% accuracy on protective-gear detection.</li>
-          <li>Shipped a face-recognition attendance system for 50+ employees, cutting manual tracking error.</li>
-          <li>Contributed to a full-stack LMS with a focus on the model-serving and inference-API layer.</li>
+          <li>Shipped a face-recognition attendance system for 50+ employees and contributed to the model-serving API layer of an LMS.</li>
         </ul>
       </div>
     </div>
@@ -365,8 +392,8 @@
     <h2 class="sec-h reveal" style="margin-bottom:34px;">A few things about me</h2>
     <div class="fun-grid">
       <div class="fun reveal"><span class="emo">🧪</span><h4>I break my own stuff</h4><p>I'd rather find the failure mode myself at 2am than let a user find it in prod.</p></div>
-      <div class="fun reveal"><span class="emo">📺</span><h4>I learn in reels</h4><p>I turned my doom-scrolling into a habit of learning RAG and systems in tiny clips.</p></div>
-      <div class="fun reveal"><span class="emo">🛠️</span><h4>Low-level curious</h4><p>Wrote a C++ inference engine just to feel how the tokens actually move.</p></div>
+      <div class="fun reveal"><span class="emo">🎮</span><h4>Competitive streak</h4><p>Spent two months building an RL farmer for Kaggle. Ended around the top 1%, still annoyed it wasn&#39;t gold.</p></div>
+      <div class="fun reveal"><span class="emo">🛠️</span><h4>Low-level curious</h4><p>Hand-wrote NEON quantization kernels just to feel how the bytes actually move.</p></div>
       <div class="fun reveal"><span class="emo">⚖️</span><h4>Evaluation nerd</h4><p>I think "is it actually good?" is the most underrated question in AI.</p></div>
       <div class="fun reveal"><span class="emo">☕</span><h4>Pune-based</h4><p>Best ideas arrive with the second cup of chai, usually.</p></div>
       <div class="fun reveal"><span class="emo">🤝</span><h4>Honest by default</h4><p>I'd rather tell you what a system can't do than oversell what it can.</p></div>
@@ -381,13 +408,13 @@
   </div>
   <div class="marquee reveal" aria-hidden="true">
     <div class="marquee-track">
-      <span>LangGraph</span><span>RAG</span><span>LLM-as-judge</span><span>FastAPI</span><span>MLflow</span><span>Airflow</span><span>ChromaDB</span><span>Docker</span><span>GCP</span><span>PyTorch</span>
-      <span>LangGraph</span><span>RAG</span><span>LLM-as-judge</span><span>FastAPI</span><span>MLflow</span><span>Airflow</span><span>ChromaDB</span><span>Docker</span><span>GCP</span><span>PyTorch</span>
+      <span>Harbor</span><span>RL environments</span><span>LLM-as-judge</span><span>MCP</span><span>LangGraph</span><span>Docker</span><span>GCP</span><span>PyTorch</span><span>PPO</span><span>C++</span>
+      <span>Harbor</span><span>RL environments</span><span>LLM-as-judge</span><span>MCP</span><span>LangGraph</span><span>Docker</span><span>GCP</span><span>PyTorch</span><span>PPO</span><span>C++</span>
     </div>
   </div>
   <div class="wrap">
     <div class="skill-tags reveal">
-      <span class="tag">LangChain</span><span class="tag">LangGraph</span><span class="tag">LlamaIndex</span><span class="tag">RAG</span><span class="tag">Multi-agent</span><span class="tag">Prompt engineering</span><span class="tag">Function calling</span><span class="tag">MCP</span><span class="tag">LLM-as-judge</span><span class="tag">Faithfulness scoring</span><span class="tag">Hallucination detection</span><span class="tag">SFT / RLHF</span><span class="tag">Rubric design</span><span class="tag">Python</span><span class="tag">FastAPI</span><span class="tag">Pydantic</span><span class="tag">Docker</span><span class="tag">MLflow</span><span class="tag">Airflow</span><span class="tag">GitHub Actions</span><span class="tag">pytest</span><span class="tag">ChromaDB</span><span class="tag">GCP</span><span class="tag">PyTorch</span><span class="tag">Hugging Face</span><span class="tag">C / C++</span><span class="tag">TypeScript</span><span class="tag">SQL</span>
+      <span class="tag">LangChain</span><span class="tag">LangGraph</span><span class="tag">LlamaIndex</span><span class="tag">RAG</span><span class="tag">Multi-agent</span><span class="tag">Prompt engineering</span><span class="tag">Function calling</span><span class="tag">MCP</span><span class="tag">LLM-as-judge</span><span class="tag">Harbor</span><span class="tag">Terminal-Bench</span><span class="tag">SWE-Bench</span><span class="tag">RL environments</span><span class="tag">Deterministic verifiers</span><span class="tag">PPO</span><span class="tag">Rubric design</span><span class="tag">Python</span><span class="tag">FastAPI</span><span class="tag">Pydantic</span><span class="tag">Docker</span><span class="tag">MLflow</span><span class="tag">Airflow</span><span class="tag">GitHub Actions</span><span class="tag">pytest</span><span class="tag">ChromaDB</span><span class="tag">GCP</span><span class="tag">PyTorch</span><span class="tag">Hugging Face</span><span class="tag">C / C++</span><span class="tag">TypeScript</span><span class="tag">SQL</span>
     </div>
   </div>
 </section>
@@ -396,9 +423,9 @@
   <div class="wrap reveal">
     <div class="contact-card">
       <h2>Let's build something fun <span class="em-hl">and</span> reliable.</h2>
-      <p>Open to GenAI and AI Engineer roles. I reply fastest to email, and yes, the button does something.</p>
+      <p>Open to applied AI, evals and RL-environment roles, full-time or contract. I reply fastest to email, and yes, the button does something.</p>
       <div class="cta-row">
-        <a class="btn btn-coral" id="hiBtn" href="mailto:aawegbhaladhare03@gmail.com">aawegbhaladhare03@gmail.com 🎉</a>
+        <a class="btn btn-coral" id="hiBtn" href="mailto:aawegwork@gmail.com">aawegwork@gmail.com 🎉</a>
         <a class="btn btn-paper" href="https://github.com/Aawegg" target="_blank" rel="noopener">GitHub</a>
         <a class="btn btn-paper" href="https://www.linkedin.com/in/aaweg/" target="_blank" rel="noopener">LinkedIn</a>
       </div>
